@@ -1,0 +1,52 @@
+﻿@model ExamenP2API.Models.PokemonModel
+
+@{
+    ViewBag.Title = "Buscador PokéAPI";
+}
+
+<h2>Buscador PokéAPI</h2>
+
+@using (Html.BeginForm("Index", "PokemonModels", FormMethod.Get))
+{
+    <div style="margin: 20px 0; display: flex; gap: 8px;">
+        <input type="text" name="nombre" class="form-control" style="max-width: 300px;" placeholder="Ej: pikachu, charizard, mewtwo, 25" required />
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+else if (Model != null)
+{
+    <div class="pokemon-card" style="max-width: 380px; border: 1px solid #ddd; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.08); background-color: #fff;">
+        <span style="display: inline-block; background-color: #0d6efd; color: #fff; padding: 3px 10px; border-radius: 20px; font-weight: bold; font-size: 0.9em;">
+            #@Model.Id
+        </span>
+
+        @if (!string.IsNullOrEmpty(Model.ImagenUrl))
+        {
+            <div style="margin: 15px 0;">
+                <img src="@Model.ImagenUrl" alt="@Model.Nombre" style="width: 200px; height: 200px; object-fit: contain;" />
+            </div>
+        }
+
+        <h3 style="text-transform: capitalize; margin-bottom: 15px;">@Model.Nombre</h3>
+
+        <table class="table table-bordered" style="margin-bottom: 0; text-align: left;">
+            <tr>
+                <th>Tipo(s)</th>
+                <td style="text-transform: capitalize;">@Model.Tipos</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.Altura)</th>
+                <td>@Model.Altura dm</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.Peso)</th>
+                <td>@Model.Peso hg</td>
+            </tr>
+        </table>
+    </div>
+}
